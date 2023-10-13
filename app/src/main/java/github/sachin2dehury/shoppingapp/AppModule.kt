@@ -25,4 +25,16 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMoshi() = Moshi.Builder().build()
+
+    @Provides
+    @Singleton
+    fun provideCartDao(db: ShoppingDatabase) = db.cartDao
+
+    @Provides
+    @Singleton
+    fun provideCategoryDao(db: ShoppingDatabase) = db.categoryDao
+
+    @Provides
+    @Singleton
+    fun provideFavDao(db: ShoppingDatabase) = db.favDao
 }

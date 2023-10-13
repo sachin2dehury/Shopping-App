@@ -4,15 +4,19 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
 
     @Upsert
-    suspend fun addItem(cartItem: CartItem)
+    suspend fun insert(cartItem: CartItem)
 
     @Query("select * from cart")
-    suspend fun fetchItems(): List<CartItem>
+    fun fetchItems(): Flow<List<CartItem>>
+
+    @Query("select * from cart where id=:id")
+    suspend fun getItem(id: Int?): CartItem?
 
     @Delete
     suspend fun deleteItem(cartItem: CartItem)

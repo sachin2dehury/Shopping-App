@@ -3,6 +3,7 @@ package github.sachin2dehury.shoppingapp
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
@@ -10,5 +11,5 @@ interface CategoryDao {
     suspend fun addItems(category: List<Category>)
 
     @Query("select * from category")
-    suspend fun fetchItems(): List<Category>
+    fun fetchItems(): Flow<List<Category>>
 }
