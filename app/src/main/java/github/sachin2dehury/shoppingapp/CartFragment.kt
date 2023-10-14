@@ -25,6 +25,10 @@ class CartFragment : Fragment(R.layout.fragment_simple_rv), CartClickListener {
         binding = FragmentSimpleRvBinding.bind(view)
 
         binding?.recyclerView?.adapter = adapter
+        binding?.tvTitle?.text = "Cart"
+        binding?.ivMenu?.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         subscribeToObservers()
     }
 

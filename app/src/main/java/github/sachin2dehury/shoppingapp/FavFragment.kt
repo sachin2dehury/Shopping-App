@@ -24,6 +24,10 @@ class FavFragment : Fragment(R.layout.fragment_simple_rv), FavClickListener {
         binding = FragmentSimpleRvBinding.bind(view)
 
         binding?.recyclerView?.adapter = adapter
+        binding?.tvTitle?.text = "Fav"
+        binding?.ivMenu?.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         subscribeToObservers()
     }
 

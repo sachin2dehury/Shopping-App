@@ -2,13 +2,16 @@ package github.sachin2dehury.shoppingapp
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.shoppingapp.databinding.ItemRecyclerViewBinding
 
-class CategoryAdapter(private val listener: ItemClickListener) : RecyclerView.Adapter<CategoryViewHolder>() {
+class CategoryAdapter(private val listener: ItemClickListener) :
+    RecyclerView.Adapter<CategoryViewHolder>() {
 
+    var likedSet: Set<Int?>? = null
     val differ = AsyncListDiffer(this, CategoryDiffer())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -24,11 +27,15 @@ class CategoryAdapter(private val listener: ItemClickListener) : RecyclerView.Ad
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = differ.currentList.getOrNull(position) ?: return
         val items = category.items ?: return
-        val likedItems = items.filterNotNull().map { LikedItem(it, false) }
+        val likedItems =
+            items.filterNotNull().map { LikedItem(it, likedSet?.contains(it.id) ?: false) }
         with(holder.binding) {
+            tvTitle.text = category.name
             recyclerView.adapter = holder.adapter
             holder.adapter.differ.submitList(likedItems)
-            tvTitle.text = category.name
+            ivIcon.setOnClickListener {
+                recyclerView.isVisible = !recyclerView.isVisible
+            }
         }
     }
 }

@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener {
+class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener,
+    CategoryClickListener {
 
     private val viewModel: CategoryViewModel by viewModels()
 
@@ -24,12 +25,18 @@ class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCategoryBinding.bind(view)
 
+        binding?.tvTitle?.text = "Category"
         binding?.recyclerView?.adapter = adapter
         binding?.ivCart?.setOnClickListener {
             findNavController().navigate(R.id.action_categoryFragment_to_cartFragment)
         }
         binding?.ivFav?.setOnClickListener {
             findNavController().navigate(R.id.action_categoryFragment_to_favFragment)
+        }
+        binding?.ivMenu?.setOnClickListener {
+            CategoryDialogFragment.getInstance(viewModel.categoryData.value, this).also {
+                it.show(childFragmentManager, CategoryDialogFragment.TAG)
+            }
         }
         subscribeToObservers()
     }
@@ -38,6 +45,11 @@ class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener
         lifecycleScope.launch {
             viewModel.categoryData.collectLatest {
                 adapter.differ.submitList(it)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.favData.collectLatest {
+                adapter.likedSet = it?.map { it.id }?.toSet()
             }
         }
     }
@@ -53,5 +65,10 @@ class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener
 
     override fun addToCart(item: Item) {
         viewModel.addToCart(item)
+    }
+
+    override fun onClick(item: Category) {
+        val index = adapter.differ.currentList.indexOf(item)
+        binding?.recyclerView?.scrollToPosition(index)
     }
 }

@@ -30,7 +30,10 @@ class CategoryItemAdapter(private val listener: ItemClickListener) :
             ivHeart.isSelected = likedItem.liked
             tvTitle.text = item.name
             tvSubtitle.text = "₹ ${item.price}"
-            ivHeart.setOnClickListener { listener.toggleLike(item) }
+            ivHeart.setOnClickListener {
+                ivHeart.isSelected = !ivHeart.isSelected
+                listener.toggleLike(item)
+            }
             ivCart.setOnClickListener { listener.addToCart(item) }
         }
     }
