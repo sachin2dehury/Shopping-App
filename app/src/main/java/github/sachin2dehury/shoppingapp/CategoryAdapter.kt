@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import github.sachin2dehury.shoppingapp.databinding.ItemRecyclerViewBinding
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryViewHolder>() {
+class CategoryAdapter(private val listener: ItemClickListener) : RecyclerView.Adapter<CategoryViewHolder>() {
 
     val differ = AsyncListDiffer(this, CategoryDiffer())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val binding = ItemRecyclerViewBinding.inflate(LayoutInflater.from(parent.context))
-        return CategoryViewHolder(binding)
+        val adapter = CategoryItemAdapter(listener)
+        return CategoryViewHolder(binding, adapter)
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +35,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryViewHolder>() {
 
 class CategoryViewHolder(
     val binding: ItemRecyclerViewBinding,
-    val adapter: CategoryItemAdapter = CategoryItemAdapter()
+    val adapter: CategoryItemAdapter
 ) : RecyclerView.ViewHolder(binding.root)
 
 class CategoryDiffer : DiffUtil.ItemCallback<Category>() {

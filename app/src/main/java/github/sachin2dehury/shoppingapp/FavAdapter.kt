@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import github.sachin2dehury.shoppingapp.databinding.ItemFavBinding
 
-class FavAdapter : RecyclerView.Adapter<FavViewHolder>() {
+class FavAdapter(private val listener: FavClickListener) : RecyclerView.Adapter<FavViewHolder>() {
 
     val differ = AsyncListDiffer(this, FavDiffer())
 
@@ -23,11 +24,19 @@ class FavAdapter : RecyclerView.Adapter<FavViewHolder>() {
     override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
         val item = differ.currentList.getOrNull(position) ?: return
         with(holder.binding) {
+            ivIcon.load(item.icon)
             tvTitle.text = item.name
             tvSubtitle.text = "₹ ${item.price}"
             ivHeart.isSelected = true
+            ivHeart.setOnClickListener { listener.unLike(item) }
+            ivCart.setOnClickListener { listener.moveToCart(item) }
         }
     }
+}
+
+interface FavClickListener {
+    fun unLike(item: Item)
+    fun moveToCart(item: Item)
 }
 
 class FavViewHolder(val binding: ItemFavBinding) :

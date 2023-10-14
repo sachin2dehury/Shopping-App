@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
@@ -15,7 +17,7 @@ class CartViewModel @Inject constructor(
 
     private val viewModelIOScope = viewModelScope + Dispatchers.IO
 
-    val cartData = cartDao.fetchItems()
+    val cartData = cartDao.fetchItems().stateIn(viewModelIOScope, SharingStarted.Eagerly, null)
 
     fun incrementItem(cartItem: CartItem) = viewModelIOScope.launch {
         cartDao.insert(cartItem.copy(quantity = cartItem.quantity + 1))

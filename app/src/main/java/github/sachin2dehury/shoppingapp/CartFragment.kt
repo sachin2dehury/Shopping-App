@@ -5,38 +5,32 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import github.sachin2dehury.shoppingapp.databinding.FragmentCategoryBinding
+import github.sachin2dehury.shoppingapp.databinding.FragmentSimpleRvBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener {
+class CartFragment : Fragment(R.layout.fragment_simple_rv), CartClickListener {
 
-    private val viewModel: CategoryViewModel by viewModels()
+    private val viewModel: CartViewModel by viewModels()
 
-    private var binding: FragmentCategoryBinding? = null
+    private var binding: FragmentSimpleRvBinding? = null
 
-    private val adapter = CategoryAdapter(this)
+    private val adapter = CartAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentCategoryBinding.bind(view)
+        binding = FragmentSimpleRvBinding.bind(view)
 
         binding?.recyclerView?.adapter = adapter
-        binding?.ivCart?.setOnClickListener {
-            findNavController().navigate(R.id.action_categoryFragment_to_cartFragment)
-        }
-        binding?.ivFav?.setOnClickListener {
-            findNavController().navigate(R.id.action_categoryFragment_to_favFragment)
-        }
         subscribeToObservers()
     }
 
     private fun subscribeToObservers() {
         lifecycleScope.launch {
-            viewModel.categoryData.collectLatest {
+            viewModel.cartData.collectLatest {
                 adapter.differ.submitList(it)
             }
         }
@@ -47,11 +41,11 @@ class CategoryFragment : Fragment(R.layout.fragment_category), ItemClickListener
         super.onDestroyView()
     }
 
-    override fun toggleLike(item: Item) {
-        viewModel.toggleFav(item)
+    override fun plus(item: CartItem) {
+        viewModel.incrementItem(item)
     }
 
-    override fun addToCart(item: Item) {
-        viewModel.addToCart(item)
+    override fun minus(item: CartItem) {
+        viewModel.decrementItem(item)
     }
 }

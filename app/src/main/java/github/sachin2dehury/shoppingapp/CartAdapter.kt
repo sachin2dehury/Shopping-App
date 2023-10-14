@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import github.sachin2dehury.shoppingapp.databinding.ItemCartBinding
 
-class CartAdapter : RecyclerView.Adapter<CartViewHolder>() {
+class CartAdapter(private val listener: CartClickListener) :
+    RecyclerView.Adapter<CartViewHolder>() {
 
     val differ = AsyncListDiffer(this, CartDiffer())
 
@@ -27,9 +29,16 @@ class CartAdapter : RecyclerView.Adapter<CartViewHolder>() {
             tvTitle.text = item.name
             tvSubtitle.text = "₹ $price"
             tvQuantity.text = "${item.quantity}"
-            ivIcon
+            ivIcon.load(item.icon)
+            ivPlus.setOnClickListener { listener.plus(item) }
+            ivMinus.setOnClickListener { listener.minus(item) }
         }
     }
+}
+
+interface CartClickListener {
+    fun plus(item: CartItem)
+    fun minus(item: CartItem)
 }
 
 class CartViewHolder(val binding: ItemCartBinding) :

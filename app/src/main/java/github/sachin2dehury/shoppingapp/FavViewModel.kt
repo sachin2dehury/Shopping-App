@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
@@ -16,7 +18,7 @@ class FavViewModel @Inject constructor(
 
     private val viewModelIOScope = viewModelScope + Dispatchers.IO
 
-    val favData = favDao.fetchItems()
+    val favData = favDao.fetchItems().stateIn(viewModelIOScope, SharingStarted.Eagerly, null)
 
     fun removeItem(item: Item) = viewModelIOScope.launch {
         favDao.deleteItem(item)

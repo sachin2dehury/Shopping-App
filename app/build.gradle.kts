@@ -64,4 +64,6 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-paging:2.5.2")
+
+    implementation("io.coil-kt:coil:2.4.0")
 }

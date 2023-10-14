@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
@@ -17,8 +20,8 @@ class CategoryViewModel @Inject constructor(
 
     private val viewModelIOScope = viewModelScope + Dispatchers.IO
 
-    val categoryData = categoryDao.fetchItems()
-    val favData = favDao.fetchItems()
+    val categoryData = categoryDao.fetchItems().stateIn(viewModelIOScope, SharingStarted.Eagerly, null)
+    val favData = favDao.fetchItems().stateIn(viewModelIOScope, SharingStarted.Eagerly, null)
 
     fun toggleFav(item: Item) = viewModelIOScope.launch {
         if (favDao.deleteItem(item) == 1) {

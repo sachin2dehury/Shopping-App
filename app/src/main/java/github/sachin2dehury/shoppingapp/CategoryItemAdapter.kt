@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import github.sachin2dehury.shoppingapp.databinding.ItemCategoryBinding
 
-class CategoryItemAdapter : RecyclerView.Adapter<CategoryItemViewHolder>() {
+class CategoryItemAdapter(private val listener: ItemClickListener) :
+    RecyclerView.Adapter<CategoryItemViewHolder>() {
 
     val differ = AsyncListDiffer(this, LikedItemDiffer())
 
@@ -24,12 +26,19 @@ class CategoryItemAdapter : RecyclerView.Adapter<CategoryItemViewHolder>() {
         val likedItem = differ.currentList.getOrNull(position) ?: return
         val item = likedItem.item
         with(holder.binding) {
-            ivIcon
+            ivIcon.load(item.icon)
             ivHeart.isSelected = likedItem.liked
             tvTitle.text = item.name
             tvSubtitle.text = "₹ ${item.price}"
+            ivHeart.setOnClickListener { listener.toggleLike(item) }
+            ivIcon.setOnClickListener { listener.addToCart(item) }
         }
     }
+}
+
+interface ItemClickListener {
+    fun toggleLike(item: Item)
+    fun addToCart(item: Item)
 }
 
 class CategoryItemViewHolder(val binding: ItemCategoryBinding) :
