@@ -12,12 +12,13 @@
         android:layout_height="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/black" />
+        android:background="@color/design_default_color_primary" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_minus"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        app:srcCompat="@color/design_default_color_primary"
         android:background="?selectableItemBackground"
         app:layout_constraintEnd_toStartOf="@id/tv_quantity"
         app:layout_constraintStart_toEndOf="@id/tv_title"
@@ -28,6 +29,7 @@
         android:id="@+id/iv_plus"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        app:srcCompat="@color/design_default_color_secondary"
         android:background="?selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

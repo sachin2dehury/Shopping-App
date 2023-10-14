@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -10,10 +9,10 @@
         android:id="@+id/iv_icon"
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:background="@color/design_default_color_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/black" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_heart"
@@ -22,17 +21,17 @@
         android:background="?selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/white" />
+        app:srcCompat="@color/design_default_color_secondary" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_cart"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:background="?selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@id/tv_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_title"
-        app:layout_constraintBottom_toBottomOf="@id/tv_subtitle"
-        tools:background="@color/white" />
+        app:srcCompat="@color/design_default_color_primary" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

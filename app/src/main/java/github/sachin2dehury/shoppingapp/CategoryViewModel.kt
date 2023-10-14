@@ -24,7 +24,7 @@ class CategoryViewModel @Inject constructor(
     val favData = favDao.fetchItems().stateIn(viewModelIOScope, SharingStarted.Eagerly, null)
 
     fun toggleFav(item: Item) = viewModelIOScope.launch {
-        if (favDao.deleteItem(item) == 1) {
+        if (favDao.deleteItem(item) == 0) {
             favDao.addItem(item)
         }
     }

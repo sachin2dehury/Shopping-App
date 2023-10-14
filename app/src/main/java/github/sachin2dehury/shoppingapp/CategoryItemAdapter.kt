@@ -31,7 +31,7 @@ class CategoryItemAdapter(private val listener: ItemClickListener) :
             tvTitle.text = item.name
             tvSubtitle.text = "₹ ${item.price}"
             ivHeart.setOnClickListener { listener.toggleLike(item) }
-            ivIcon.setOnClickListener { listener.addToCart(item) }
+            ivCart.setOnClickListener { listener.addToCart(item) }
         }
     }
 }
@@ -46,7 +46,7 @@ class CategoryItemViewHolder(val binding: ItemCategoryBinding) :
 
 class LikedItemDiffer : DiffUtil.ItemCallback<LikedItem>() {
     override fun areItemsTheSame(oldItem: LikedItem, newItem: LikedItem): Boolean {
-        return oldItem === newItem
+        return oldItem.item.id == newItem.item.id
     }
 
     override fun areContentsTheSame(oldItem: LikedItem, newItem: LikedItem): Boolean {
