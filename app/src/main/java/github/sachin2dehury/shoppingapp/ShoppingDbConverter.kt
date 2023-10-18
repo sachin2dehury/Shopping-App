@@ -4,6 +4,7 @@ import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import github.sachin2dehury.shoppingapp.data.Item
 
 @ProvidedTypeConverter
 class ShoppingDbConverter(private val moshi: Moshi) {

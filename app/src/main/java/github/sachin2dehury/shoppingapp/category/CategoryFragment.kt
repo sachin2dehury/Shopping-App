@@ -1,4 +1,4 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.category
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import github.sachin2dehury.shoppingapp.R
+import github.sachin2dehury.shoppingapp.category.dialog.CategoryClickListener
+import github.sachin2dehury.shoppingapp.category.dialog.CategoryDialogFragment
+import github.sachin2dehury.shoppingapp.data.Category
+import github.sachin2dehury.shoppingapp.data.Item
 import github.sachin2dehury.shoppingapp.databinding.FragmentCategoryBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

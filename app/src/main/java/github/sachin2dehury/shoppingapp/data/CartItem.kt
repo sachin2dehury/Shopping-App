@@ -1,4 +1,4 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

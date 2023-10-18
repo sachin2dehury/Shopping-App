@@ -1,9 +1,8 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import github.sachin2dehury.shoppingapp.databinding.ItemCartBinding
@@ -14,7 +13,7 @@ class CartAdapter(private val listener: CartClickListener) :
     val differ = AsyncListDiffer(this, CartDiffer())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val binding = ItemCartBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CartViewHolder(binding)
     }
 
@@ -36,20 +35,3 @@ class CartAdapter(private val listener: CartClickListener) :
     }
 }
 
-interface CartClickListener {
-    fun plus(item: CartItem)
-    fun minus(item: CartItem)
-}
-
-class CartViewHolder(val binding: ItemCartBinding) :
-    RecyclerView.ViewHolder(binding.root)
-
-class CartDiffer : DiffUtil.ItemCallback<CartItem>() {
-    override fun areItemsTheSame(oldItem: CartItem, newItem: CartItem): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: CartItem, newItem: CartItem): Boolean {
-        return oldItem == newItem
-    }
-}

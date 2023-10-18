@@ -1,8 +1,10 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.category.dialog
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
+import github.sachin2dehury.shoppingapp.R
+import github.sachin2dehury.shoppingapp.data.Category
 import github.sachin2dehury.shoppingapp.databinding.FragmentCategoryDialogBinding
 
 class CategoryDialogFragment : DialogFragment(R.layout.fragment_category_dialog) {

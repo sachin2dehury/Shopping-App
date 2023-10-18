@@ -1,8 +1,9 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import github.sachin2dehury.shoppingapp.data.CartItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

@@ -1,9 +1,8 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import github.sachin2dehury.shoppingapp.databinding.ItemCategoryBinding
@@ -14,7 +13,7 @@ class CategoryItemAdapter(private val listener: ItemClickListener) :
     val differ = AsyncListDiffer(this, LikedItemDiffer())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder {
-        val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CategoryItemViewHolder(binding)
     }
 
@@ -39,20 +38,3 @@ class CategoryItemAdapter(private val listener: ItemClickListener) :
     }
 }
 
-interface ItemClickListener {
-    fun toggleLike(item: Item)
-    fun addToCart(item: Item)
-}
-
-class CategoryItemViewHolder(val binding: ItemCategoryBinding) :
-    RecyclerView.ViewHolder(binding.root)
-
-class LikedItemDiffer : DiffUtil.ItemCallback<LikedItem>() {
-    override fun areItemsTheSame(oldItem: LikedItem, newItem: LikedItem): Boolean {
-        return oldItem.item.id == newItem.item.id
-    }
-
-    override fun areContentsTheSame(oldItem: LikedItem, newItem: LikedItem): Boolean {
-        return oldItem == newItem
-    }
-}

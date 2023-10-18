@@ -1,9 +1,8 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.fav
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import github.sachin2dehury.shoppingapp.databinding.ItemFavBinding
@@ -13,7 +12,7 @@ class FavAdapter(private val listener: FavClickListener) : RecyclerView.Adapter<
     val differ = AsyncListDiffer(this, FavDiffer())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavViewHolder {
-        val binding = ItemFavBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = ItemFavBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavViewHolder(binding)
     }
 
@@ -34,20 +33,3 @@ class FavAdapter(private val listener: FavClickListener) : RecyclerView.Adapter<
     }
 }
 
-interface FavClickListener {
-    fun unLike(item: Item)
-    fun moveToCart(item: Item)
-}
-
-class FavViewHolder(val binding: ItemFavBinding) :
-    RecyclerView.ViewHolder(binding.root)
-
-class FavDiffer : DiffUtil.ItemCallback<Item>() {
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem == newItem
-    }
-}

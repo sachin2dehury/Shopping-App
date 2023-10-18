@@ -1,4 +1,4 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.fav
 
 import android.os.Bundle
 import android.view.View
@@ -6,26 +6,27 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import github.sachin2dehury.shoppingapp.databinding.FragmentCategoryBinding
+import github.sachin2dehury.shoppingapp.R
+import github.sachin2dehury.shoppingapp.data.Item
 import github.sachin2dehury.shoppingapp.databinding.FragmentSimpleRvBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CartFragment : Fragment(R.layout.fragment_simple_rv), CartClickListener {
+class FavFragment : Fragment(R.layout.fragment_simple_rv), FavClickListener {
 
-    private val viewModel: CartViewModel by viewModels()
+    private val viewModel: FavViewModel by viewModels()
 
     private var binding: FragmentSimpleRvBinding? = null
 
-    private val adapter = CartAdapter(this)
+    private val adapter = FavAdapter(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSimpleRvBinding.bind(view)
 
         binding?.recyclerView?.adapter = adapter
-        binding?.tvTitle?.text = "Cart"
+        binding?.tvTitle?.text = "Fav"
         binding?.ivMenu?.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -34,7 +35,7 @@ class CartFragment : Fragment(R.layout.fragment_simple_rv), CartClickListener {
 
     private fun subscribeToObservers() {
         lifecycleScope.launch {
-            viewModel.cartData.collectLatest {
+            viewModel.favData.collectLatest {
                 adapter.differ.submitList(it)
             }
         }
@@ -45,11 +46,11 @@ class CartFragment : Fragment(R.layout.fragment_simple_rv), CartClickListener {
         super.onDestroyView()
     }
 
-    override fun plus(item: CartItem) {
-        viewModel.incrementItem(item)
+    override fun unLike(item: Item) {
+        viewModel.removeItem(item)
     }
 
-    override fun minus(item: CartItem) {
-        viewModel.decrementItem(item)
+    override fun moveToCart(item: Item) {
+        viewModel.moveToCart(item)
     }
 }

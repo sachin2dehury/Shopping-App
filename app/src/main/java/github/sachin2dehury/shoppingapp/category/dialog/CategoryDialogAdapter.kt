@@ -1,9 +1,10 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.category.dialog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
+import github.sachin2dehury.shoppingapp.category.CategoryDiffer
 import github.sachin2dehury.shoppingapp.databinding.ItemCategoryDialogBinding
 
 class CategoryDialogAdapter(private val listener: CategoryClickListener?) :
@@ -12,7 +13,8 @@ class CategoryDialogAdapter(private val listener: CategoryClickListener?) :
     val differ = AsyncListDiffer(this, CategoryDiffer())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryDialogViewHolder {
-        val binding = ItemCategoryDialogBinding.inflate(LayoutInflater.from(parent.context))
+        val binding =
+            ItemCategoryDialogBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CategoryDialogViewHolder(binding)
     }
 
@@ -31,9 +33,3 @@ class CategoryDialogAdapter(private val listener: CategoryClickListener?) :
     }
 }
 
-interface CategoryClickListener {
-    fun onClick(item: Category)
-}
-
-class CategoryDialogViewHolder(val binding: ItemCategoryDialogBinding) :
-    RecyclerView.ViewHolder(binding.root)

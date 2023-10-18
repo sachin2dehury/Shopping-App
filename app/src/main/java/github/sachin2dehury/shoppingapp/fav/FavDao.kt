@@ -1,9 +1,10 @@
-package github.sachin2dehury.shoppingapp
+package github.sachin2dehury.shoppingapp.fav
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
+import github.sachin2dehury.shoppingapp.data.Item
 import kotlinx.coroutines.flow.Flow
 
 @Dao
